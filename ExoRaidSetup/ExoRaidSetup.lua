@@ -4,10 +4,18 @@ local ERSver = "1.34"
 local ERScoord = {}
 local ERSInputRequestor
 local TempSetup = {}
-local ERSbackgrounds = {"Skeram","Bug Trio","Satura","Fankriss","Viscidus","Huhuran",
-	"Twin Emperors","Ouro","C'thun","Anub'Rekhan","Faerlina","Maexxna","Razuvious",
-	"Gothik","Horsemen","Noth","Heigan","Loatheb","Patchwerk","Grobbulus","Gluth",
-	"Thaddius","Sapphiron","Kel'Thuzad","Blank","MiniMap"}
+local ERSbackgrounds = {"Blank",
+	"Lord Kazzak_Blasted Lands","Azuregos_Azshara","Emeriss_Feralas","Lethon_Hinterlands","Taerar_Duskwood","Ysondre_Ashenvale",
+	"Kel'Thuzad_NAXX","Sapphiron_NAXX","Thaddius_NAXX","Gluth_NAXX","Grobbulus_NAXX","Patchwerk_NAXX","Loatheb_NAXX","Heigan the Unclean_NAXX","Noth the Plaguebringer_NAXX","The Four Horsemen_NAXX","Gothik the Harvester_NAXX",
+	"Instructor Razuvious_NAXX","Maexxna_NAXX","Grand Widow Faerlina_NAXX","Anub'Rekhan_NAXX",
+	"C'thun_AQ40","Ouro_AQ40","Twin Emperors_AQ40","Princess Huhuran_AQ40","Viscidus_AQ40","Fankriss the Unyielding_AQ40","Battleguard Sartura_AQ40","Bug Trio_AQ40","The Prophet Skeram_AQ40",
+	"Nefarian_BWL","Chromaggus_BWL","Flamegor_BWL","Ebonroc_BWL","Firemaw_BWL","Broodlord Lashlayer_BWL","Vaelastrasz the Corrupt_BWL","Razorgore the Untamed_BWL",
+	"Ragnaros_MC","Majordomo Executus_MC","Golemagg the Incinerator_MC","Sulfuron Harbinger_MC","Shazzrah_MC","Baron Geddon_MC","Garr_MC","Gehennas_MC","Magmadar_MC","Lucifron_MC",
+	"Onyxia_ONY",
+	"Ossirian the Unscarred_AQ20","Ayamiss the Hunter_AQ20","Buru the Gorger_AQ20","Moam_AQ20","General Rajaxx_AQ20","Kurinnaxx_AQ20",
+	"Gahz'ranka_ZG","Hakkar_ZG","Jin'do the Hexxer_ZG","High Priestess Arlokk_ZG","High Priest Thekal_ZG","Edge of Madness_ZG","Bloodlord Mandokir_ZG","High Priestess Mar'li_ZG","High Priest Venoxis_ZG","High Priestess Jeklik_ZG",
+	"AV_North","AV_Middle","AV_South","AB","WSG","Gurubashi_Arena","TheMaul_Arena","Darnassis","Ironforge","Stormwind","Undercity","ThunderBluff","Orgrimmar",
+	"MiniMap"}
 local ERSbackground = 0
 local firstshow = true
 local firstRaidshow = true
@@ -710,22 +718,22 @@ function ers_symbolTextSelect(mWheel)
 end
 
 function ers_cycleBackground(mWheel)
-	if ERSbackground == 26 and mWheel then
+	if ERSbackground == 228 and mWheel then
 		ERSmmInfo:Hide()
 		ers_mmToggle()
 	end
 	if mWheel == 1 then
 		ERSbackground = ERSbackground + 1
-		if ERSbackground > 26 then
+		if ERSbackground > 79 then--Oldi
 			ERSbackground = 1
 		end
 	elseif mWheel == -1 then
 		ERSbackground = ERSbackground - 1
 		if ERSbackground < 1 then
-			ERSbackground = 26
+			ERSbackground = 79--Oldi
 		end
 	end
-	if ERSbackground == 26 then
+	if ERSbackground == 228 then
 		ERSbackdrop:SetTexture(nil)
 		ERSbackdropText:SetText(ERSbackgrounds[ERSbackground])
 		ERSmmInfo:Show()
@@ -1114,7 +1122,7 @@ function ers_processData(symData,targAudience)
 ---exrsData2 (S/M).numArrows*chunk4#chunk5^chunk6-
 --      			arrow |x values|y values| textures
 	if targAudience == "L" or targAudience == "R" or targAudience == "T" then
-		if ERSbackground == 26 then
+		if ERSbackground == 228 then
 			ERSmmInfo:Hide()
 			ers_mmToggle()
 		end	
@@ -1407,7 +1415,7 @@ function ers_LoadSetup(whichsetup)
 					end
 				end
 			end
-			if ERSbackground == 26 then
+			if ERSbackground == 228 then
 				ERSmmInfo:Hide()
 				ers_mmToggle()
 			end			
@@ -1519,7 +1527,7 @@ function ers_sendRestore()
 				ers_animationToggle("LeftButton")
 			end
 		end
-		if ERSbackground == 26 then
+		if ERSbackground == 228 then
 			ERSmmInfo:Hide()
 			ers_mmToggle()
 		end	
