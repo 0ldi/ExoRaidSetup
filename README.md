@@ -9,17 +9,23 @@ The mod basically allows a raid to share graphical representations of boss pulls
 
 # Changelog
 * Changed names for convenience			
-* Changed additional icons and logo		
-* Added High Quality Maps (by default) `13,1mb`			
-* Added Low Quality Maps (if you RAM-pauper in 2k16) `3,7mb`		
-* Added BWL, MC, ONY, AQ20, ZG, WorldBosses	
+* Changed additional icons and blank		
+* There are 4 variants of maps (each individual map there almost perfectly interchangeable with analogs)			
+[Download](https://github.com/0ldi/AddonMaps)			
+-minimap_256 `BY DEFAULT`			
+-minimap_128 (lightweight version)			
+![](http://imagehost.spark-media.ru/i4/F67A6004-F7FD-F601-99F4-9CEA82CFE8BE.png)			
+-air_256 			
+-air_128 (lightweight version)		
+![](http://imagehost.spark-media.ru/i4/47EAF6C7-0508-118C-039B-488C0DDEC95A.png)	
+* Added BWL, MC, ONY, AQ20, ZG, WorldBosses, BGs, Arenas, Capitals	
 * Abolished Minimap integration when scrolling (very bugly with simpleMinimap and 0.64 scale), but you can still use for this: `/script ers_mmToggle()`		
 
 Based on `ExoRaidSetup 1.34`
 
 # Instalation
 Put `ExoRaidSetup` folder to `World of Warcraft\Interface\AddOns`	
-For lightweight maps version replace .tga files from `LowQualityMaps` to `World of Warcraft\Interface\AddOns\ExoRaidSetup\ERSart` folder
+For other maps version replace .BLP files from desired folder to `World of Warcraft\Interface\AddOns\ExoRaidSetup\ERSart` folder
 
 # Detailed description
 `/ers` is the main command to bring up the mod; this will also bring up a help screen background which details the various methods of moving and naming symbols etc.		
