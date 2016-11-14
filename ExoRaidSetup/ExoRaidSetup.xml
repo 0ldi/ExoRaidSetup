@@ -1,0 +1,817 @@
+<!--
+	ExoRaidSetup v1.34
+	Author: BioQuark of Eredar
+	Visual Raid Setup Tool
+-->
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+C:\Projects\WoW\Bin\Interface\FrameXML\UI.xsd">
+<Script file="ExoRaidSetup.lua"/>
+<Frame name="ExoRaidSetupMain" hidden="true" enableMouse="true" frameStrata = "LOW" movable="true" parent="UIParent">
+	<Anchors>
+		<Anchor point = "CENTER"/>
+	</Anchors>
+	<Size>
+		<AbsDimension x="310" y="310"/>
+	</Size>
+	<Backdrop edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+		<EdgeSize>
+			<AbsValue val="32"/>
+		</EdgeSize>
+		<TileSize>
+			<AbsValue val="32"/>
+		</TileSize>
+	</Backdrop>	
+	<Layers>
+		<Layer level="OVERLAY">
+			<Fontstring name="$parentText" inherits="GameFontNormal">
+				<Color r="1" g="1" b="1" a="1"/>
+				<Anchors>
+					<Anchor point="TOP">
+						<Offset x="30" y="10"/>
+					</Anchor>
+				</Anchors>				
+			</Fontstring>
+			<Fontstring name="ERSbackdropText" inherits="GameFontNormal">
+				<Color r="1" g=".7" b="0" a="1"/>
+				<Anchors>
+					<Anchor point="TOP">
+						<Offset x="-100" y="10"/>
+					</Anchor>
+				</Anchors>				
+			</Fontstring>
+		</Layer>
+		<Layer level="BACKGROUND">
+			<Texture name="ERSbackdrop" file = "Interface\Addons\ExoRaidSetup\ERSart\ERSHELP"/>
+		</Layer> 		
+	</Layers>
+	<Frames>
+		<Button name="ERShide" inherits="UIPanelButtonTemplate" text="X">
+			<Size>
+				<AbsDimension x="20" y="20"/>
+			</Size>
+			<Anchors>
+				<Anchor point="CENTER">
+					<Offset>
+						<AbsDimension x="150" y="160"/>
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnLoad>
+					this:RegisterForClicks("LeftButtonDown" , "RightButtonDown");
+				</OnLoad>
+				<OnClick> 
+					if arg1 == "LeftButton" then
+						ers_toggle()
+					else
+						ers_sendHideRaid()
+					end
+				</OnClick>
+				<OnEnter>
+					ers_setTT()
+				</OnEnter>
+				<OnLeave>
+					GameTooltip:Hide();
+				</OnLeave>
+			</Scripts>
+		</Button>	
+		<Button name="ERSanimation" inherits="UIPanelButtonTemplate">
+			<Size>
+				<AbsDimension x="20" y="20"/>
+			</Size>
+			<Anchors>
+				<Anchor point="CENTER">
+					<Offset>
+						<AbsDimension x="125" y="160"/>
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnLoad>
+					this:RegisterForClicks("LeftButtonDown" , "RightButtonDown");
+				</OnLoad>	
+				<OnClick>
+					ers_animationToggle(arg1)
+				</OnClick>
+				<OnMouseWheel>
+					ers_animationCycle(arg1)
+				</OnMouseWheel>
+				<OnEnter>
+					ers_setTT()
+				</OnEnter>
+				<OnLeave>
+					GameTooltip:Hide();
+				</OnLeave>
+			</Scripts>
+		</Button>
+		<Button name="ERSmmInfo" inherits="UIPanelButtonTemplate" text = "O">
+			<Size>
+				<AbsDimension x="20" y="20"/>
+			</Size>
+			<Anchors>
+				<Anchor point="CENTER">
+					<Offset>
+						<AbsDimension x="-140" y="160"/>
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnClick>
+					ers_mmMaskToggle()
+				</OnClick>
+				<OnMouseWheel>
+					ers_mmScale(arg1)
+				</OnMouseWheel>
+				<OnEnter>
+					ers_setTT()
+				</OnEnter>
+				<OnLeave>
+					GameTooltip:Hide();
+				</OnLeave>
+			</Scripts>
+		</Button>			
+		<Button name="ERStitle">
+			<Size>
+				<AbsDimension x="130" y="20"/>
+			</Size>
+			<Anchors>
+				<Anchor point="TOP">
+					<Offset>
+						<AbsDimension x="30" y="10"/>
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnClick> 
+					ers_setTitle()
+				</OnClick>
+				<OnEnter>
+					ers_setTT()
+				</OnEnter>
+				<OnLeave>
+					GameTooltip:Hide();
+				</OnLeave>
+				<OnMouseWheel>
+					ers_cycleBackground(arg1)
+				</OnMouseWheel>
+			</Scripts>
+		</Button>		
+		<Button name="ERSload" inherits="UIPanelButtonTemplate" text="Load">
+			<Size>
+				<AbsDimension x="40" y="20"/>
+			</Size>
+			<Anchors>
+				<Anchor point="CENTER">
+					<Offset>
+						<AbsDimension x="-130" y="-165"/>
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnLoad>
+					this:RegisterForClicks("LeftButtonDown" , "RightButtonDown");
+				</OnLoad>
+				<OnClick> 
+					ers_load(arg1)
+				</OnClick>
+				<OnEnter>
+					ers_setTT()
+				</OnEnter>
+				<OnLeave>
+					GameTooltip:Hide();
+				</OnLeave>
+			</Scripts>
+		</Button>
+		<Button name="ERSsave" inherits="UIPanelButtonTemplate" text="Save">
+			<Size>
+				<AbsDimension x="40" y="20"/>
+			</Size>
+			<Anchors>
+				<Anchor point="CENTER">
+					<Offset>
+						<AbsDimension x="-85" y="-165"/>
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnLoad>
+					this:RegisterForClicks("LeftButtonDown" , "RightButtonDown");
+				</OnLoad>			
+				<OnEnter>
+					ers_setTT()
+				</OnEnter>
+				<OnLeave>
+					GameTooltip:Hide();
+				</OnLeave>				
+				<OnClick>
+					ers_save(arg1)
+				</OnClick>
+			</Scripts>
+		</Button>
+		<Button name="ERSsendLeaders" inherits="UIPanelButtonTemplate" text="Leaders">
+			<Size>
+				<AbsDimension x="60" y="20"/>
+			</Size>
+			<Anchors>
+				<Anchor point="CENTER">
+					<Offset>
+						<AbsDimension x="-30" y="-165"/>
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnClick> 
+					ers_sendData()
+				</OnClick>
+				<OnEnter>
+					ers_setTT()
+				</OnEnter>
+				<OnLeave>
+					GameTooltip:Hide();
+				</OnLeave>
+			</Scripts>
+		</Button>
+		<Button name="ERSsendAll" inherits="UIPanelButtonTemplate" text="Raid">
+			<Size>
+				<AbsDimension x="40" y="20"/>
+			</Size>
+			<Anchors>
+				<Anchor point="CENTER">
+					<Offset>
+						<AbsDimension x="25" y="-165"/>
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnClick>
+					ers_sendData()
+				</OnClick>
+				<OnEnter>
+					ers_setTT()
+				</OnEnter>
+				<OnLeave>
+					GameTooltip:Hide();
+				</OnLeave>
+			</Scripts>
+		</Button>
+		<Button name="ERSreset" inherits="UIPanelButtonTemplate" text="Reset">
+			<Size>
+				<AbsDimension x="44" y="20"/>
+			</Size>
+			<Anchors>
+				<Anchor point="CENTER">
+					<Offset>
+						<AbsDimension x="72" y="-165"/>
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnClick>
+					ers_sendReset(arg1)
+				</OnClick>
+				<OnLoad>
+					this:RegisterForClicks("LeftButtonDown" , "RightButtonDown");
+				</OnLoad>
+				<OnEnter>
+					ers_setTT()
+				</OnEnter>
+				<OnLeave>
+					GameTooltip:Hide();
+				</OnLeave>
+				</Scripts>
+		</Button>	
+		<Button name="ERSrestore" inherits="UIPanelButtonTemplate" text="Restore">
+			<Size>
+				<AbsDimension x="56" y="20"/>
+			</Size>
+			<Anchors>
+				<Anchor point="CENTER">
+					<Offset>
+						<AbsDimension x="127" y="-165"/>
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnClick>
+					ers_sendRestore()
+				</OnClick>
+				<OnEnter>
+					ers_setTT()
+				</OnEnter>
+				<OnLeave>
+					GameTooltip:Hide();
+				</OnLeave>
+				</Scripts>
+		</Button>	
+		<Button name="ERSarrowSelect">
+			<NormalTexture file="Interface\Addons\ExoRaidSetup\ERSart\ERA1"/>
+			<Size>
+				<AbsDimension x="30" y="30"/>
+			</Size>
+			<Anchors>
+				<Anchor point="CENTER">
+					<Offset>
+						<AbsDimension x="-195" y="0"/>
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnClick>
+					ers_arrowHandler()
+				</OnClick>
+				<OnMouseWheel>
+					ers_arrowHandler(arg1)
+				</OnMouseWheel>
+				<OnEnter>
+					ers_setTT()
+				</OnEnter>
+				<OnLeave>
+					GameTooltip:Hide();
+				</OnLeave>
+			</Scripts>	
+		</Button>				
+	</Frames>
+	<Scripts>
+		<OnMouseDown>
+			ers_OnDragStart();
+		</OnMouseDown>
+		<OnMouseUp>
+			ers_OnDragStop();
+		</OnMouseUp>
+		<OnHide>
+			ers_OnDragStop();
+		</OnHide>
+		<Onload>
+			this:RegisterEvent("CHAT_MSG_ADDON")
+			this:RegisterEvent("CHAT_MSG_SYSTEM")
+			ers_onload();
+		</Onload>
+		<OnUpdate>
+			ers_OnUpdate()
+		</OnUpdate>
+		<OnEvent>
+			if event == "CHAT_MSG_ADDON" then
+				ers_recieveData(arg1,arg2,arg3,arg4)
+			elseif event =="CHAT_MSG_SYSTEM" then
+				ers_checkSysMsg(arg1)
+			else
+				ers_checkRaidStatus()
+			end
+		</OnEvent>
+	</Scripts>
+</Frame>
+<Frame name="ERSsymbol1" hidden="false" enableMouse="true" frameStrata = "MEDIUM" movable="true" parent="ExoRaidSetupMain">
+	<Anchors>
+		<Anchor point = "CENTER">
+			<Offset>
+				<AbsDimension x="-170" y="120"/>
+			</Offset>			
+		</Anchor>
+	</Anchors>
+	<Size>
+		<AbsDimension x="15" y="15"/>
+	</Size>
+	<Layers>
+		<Layer level="ARTWORK">
+			<Texture file="Interface\Addons\ExoRaidSetup\ERSart\ERS1"/>
+		</Layer>
+		<Layer level="OVERLAY">
+			<Fontstring name="$parentText" inherits="GameFontNormal">
+				<Color r="1" g="1" b="1" a="1"/>
+				<Anchors>
+					<Anchor point="CENTER">
+						<Offset x="0" y="-12"/>
+					</Anchor>
+				</Anchors>				
+			</Fontstring>	
+		</Layer>
+	</Layers>
+	<Scripts>
+		<OnMouseWheel>
+			ers_symbolTextSelect(arg1)
+		</OnMouseWheel>	
+		<OnMouseDown>
+			ers_MouseDown();
+		</OnMouseDown>
+		<OnMouseUp>
+			ers_OnDragStop();
+		</OnMouseUp>
+		<OnHide>
+			ers_OnDragStop();
+		</OnHide>	
+	</Scripts>
+</Frame>
+<Frame name="ERSsymbol2" hidden="false" enableMouse="true" frameStrata = "MEDIUM" movable="true" parent="ExoRaidSetupMain">
+	<Anchors>
+		<Anchor point = "CENTER">
+			<Offset>
+				<AbsDimension x="-170" y="60"/>
+			</Offset>			
+		</Anchor>
+	</Anchors>
+	<Size>
+		<AbsDimension x="15" y="15"/>
+	</Size>
+	<Layers>
+		<Layer level="ARTWORK">
+			<Texture file="Interface\Addons\ExoRaidSetup\ERSart\ERS2"/>
+		</Layer>
+		<Layer level="OVERLAY">
+			<Fontstring name="$parentText" inherits="GameFontNormal">
+				<Color r="1" g="1" b="1" a="1"/>
+				<Anchors>
+					<Anchor point="CENTER">
+						<Offset x="0" y="-12"/>
+					</Anchor>
+				</Anchors>				
+			</Fontstring>	
+		</Layer>		
+	</Layers>
+	<Scripts>
+		<OnMouseWheel>
+			ers_symbolTextSelect(arg1)
+		</OnMouseWheel>		
+		<OnMouseDown>
+			ers_MouseDown();
+		</OnMouseDown>
+		<OnMouseUp>
+			ers_OnDragStop();
+		</OnMouseUp>
+		<OnHide>
+			ers_OnDragStop();
+		</OnHide>	
+	</Scripts>
+</Frame>
+<Frame name="ERSsymbol3" hidden="false" enableMouse="true" frameStrata = "MEDIUM" movable="true" parent="ExoRaidSetupMain">
+	<Anchors>
+		<Anchor point = "CENTER">
+			<Offset>
+				<AbsDimension x="-170" y="0"/>
+			</Offset>			
+		</Anchor>
+	</Anchors>
+	<Size>
+		<AbsDimension x="15" y="15"/>
+	</Size>
+	<Layers>
+		<Layer level="ARTWORK">
+			<Texture file="Interface\Addons\ExoRaidSetup\ERSart\ERS3"/>
+		</Layer>
+		<Layer level="OVERLAY">
+			<Fontstring name="$parentText" inherits="GameFontNormal">
+				<Color r="1" g="1" b="1" a="1"/>
+				<Anchors>
+					<Anchor point="CENTER">
+						<Offset x="0" y="-12"/>
+					</Anchor>
+				</Anchors>				
+			</Fontstring>	
+		</Layer>		
+	</Layers>
+	<Scripts>
+		<OnMouseWheel>
+			ers_symbolTextSelect(arg1)
+		</OnMouseWheel>		
+		<OnMouseDown>
+			ers_MouseDown();
+		</OnMouseDown>
+		<OnMouseUp>
+			ers_OnDragStop();
+		</OnMouseUp>
+		<OnHide>
+			ers_OnDragStop();
+		</OnHide>	
+	</Scripts>
+</Frame>
+<Frame name="ERSsymbol4" hidden="false" enableMouse="true" frameStrata = "MEDIUM" movable="true" parent="ExoRaidSetupMain">
+	<Anchors>
+		<Anchor point = "CENTER">
+			<Offset>
+				<AbsDimension x="-170" y="-60"/>
+			</Offset>			
+		</Anchor>
+	</Anchors>
+	<Size>
+		<AbsDimension x="15" y="15"/>
+	</Size>
+	<Layers>
+		<Layer level="ARTWORK">
+			<Texture file="Interface\Addons\ExoRaidSetup\ERSart\ERS4"/>
+		</Layer>
+		<Layer level="OVERLAY">
+			<Fontstring name="$parentText" inherits="GameFontNormal">
+				<Color r="1" g="1" b="1" a="1"/>
+				<Anchors>
+					<Anchor point="CENTER">
+						<Offset x="0" y="-12"/>
+					</Anchor>
+				</Anchors>				
+			</Fontstring>	
+		</Layer>		
+	</Layers>
+	<Scripts>
+		<OnMouseWheel>
+			ers_symbolTextSelect(arg1)
+		</OnMouseWheel>		
+		<OnMouseDown>
+			ers_MouseDown();
+		</OnMouseDown>
+		<OnMouseUp>
+			ers_OnDragStop();
+		</OnMouseUp>
+		<OnHide>
+			ers_OnDragStop();
+		</OnHide>	
+	</Scripts>
+</Frame>
+<Frame name="ERSsymbol5" hidden="false" enableMouse="true" frameStrata = "MEDIUM" movable="true" parent="ExoRaidSetupMain">
+	<Anchors>
+		<Anchor point = "CENTER">
+			<Offset>
+				<AbsDimension x="-170" y="-120"/>
+			</Offset>			
+		</Anchor>
+	</Anchors>
+	<Size>
+		<AbsDimension x="15" y="15"/>
+	</Size>
+	<Layers>
+		<Layer level="ARTWORK">
+			<Texture file="Interface\Addons\ExoRaidSetup\ERSart\ERS5"/>
+		</Layer>
+		<Layer level="OVERLAY">
+			<Fontstring name="$parentText" inherits="GameFontNormal">
+				<Color r="1" g="1" b="1" a="1"/>
+				<Anchors>
+					<Anchor point="CENTER">
+						<Offset x="0" y="-12"/>
+					</Anchor>
+				</Anchors>				
+			</Fontstring>	
+		</Layer>		
+	</Layers>
+	<Scripts>
+		<OnMouseWheel>
+			ers_symbolTextSelect(arg1)
+		</OnMouseWheel>	
+		<OnMouseDown>
+			ers_MouseDown();
+		</OnMouseDown>
+		<OnMouseUp>
+			ers_OnDragStop();
+		</OnMouseUp>
+		<OnHide>
+			ers_OnDragStop();
+		</OnHide>	
+	</Scripts>
+</Frame>
+<Frame name="ERSsymbol6" hidden="false" enableMouse="true" frameStrata = "MEDIUM" movable="true" parent="ExoRaidSetupMain">
+	<Anchors>
+		<Anchor point = "CENTER">
+			<Offset>
+				<AbsDimension x="170" y="120"/>
+			</Offset>			
+		</Anchor>
+	</Anchors>
+	<Size>
+		<AbsDimension x="15" y="15"/>
+	</Size>
+	<Layers>
+		<Layer level="ARTWORK">
+			<Texture file="Interface\Addons\ExoRaidSetup\ERSart\ERS6"/>
+		</Layer>
+		<Layer level="OVERLAY">
+			<Fontstring name="$parentText" inherits="GameFontNormal">
+				<Color r="1" g="1" b="1" a="1"/>
+				<Anchors>
+					<Anchor point="CENTER">
+						<Offset x="0" y="-12"/>
+					</Anchor>
+				</Anchors>				
+			</Fontstring>	
+		</Layer>		
+	</Layers>
+	<Scripts>
+		<OnMouseWheel>
+			ers_symbolTextSelect(arg1)
+		</OnMouseWheel>		
+		<OnMouseDown>
+			ers_MouseDown();
+		</OnMouseDown>
+		<OnMouseUp>
+			ers_OnDragStop();
+		</OnMouseUp>
+		<OnHide>
+			ers_OnDragStop();
+		</OnHide>	
+	</Scripts>
+</Frame>
+<Frame name="ERSsymbol7" hidden="false" enableMouse="true" frameStrata = "MEDIUM" movable="true" parent="ExoRaidSetupMain">
+	<Anchors>
+		<Anchor point = "CENTER">
+			<Offset>
+				<AbsDimension x="170" y="60"/>
+			</Offset>			
+		</Anchor>
+	</Anchors>
+	<Size>
+		<AbsDimension x="15" y="15"/>
+	</Size>
+	<Layers>
+		<Layer level="ARTWORK">
+			<Texture file="Interface\Addons\ExoRaidSetup\ERSart\ERS7"/>
+		</Layer>
+		<Layer level="OVERLAY">
+			<Fontstring name="$parentText" inherits="GameFontNormal">
+				<Color r="1" g="1" b="1" a="1"/>
+				<Anchors>
+					<Anchor point="CENTER">
+						<Offset x="0" y="-12"/>
+					</Anchor>
+				</Anchors>				
+			</Fontstring>	
+		</Layer>		
+	</Layers>
+	<Scripts>
+		<OnMouseWheel>
+			ers_symbolTextSelect(arg1)
+		</OnMouseWheel>		
+		<OnMouseDown>
+			ers_MouseDown();
+		</OnMouseDown>
+		<OnMouseUp>
+			ers_OnDragStop();
+		</OnMouseUp>
+		<OnHide>
+			ers_OnDragStop();
+		</OnHide>	
+	</Scripts>
+</Frame>
+<Frame name="ERSsymbol8" hidden="false" enableMouse="true" frameStrata = "MEDIUM" movable="true" parent="ExoRaidSetupMain">
+	<Anchors>
+		<Anchor point = "CENTER">
+			<Offset>
+				<AbsDimension x="170" y="0"/>
+			</Offset>			
+		</Anchor>
+	</Anchors>
+	<Size>
+		<AbsDimension x="15" y="15"/>
+	</Size>
+	<Layers>
+		<Layer level="ARTWORK">
+			<Texture file="Interface\Addons\ExoRaidSetup\ERSart\ERS8"/>
+		</Layer>
+		<Layer level="OVERLAY">
+			<Fontstring name="$parentText" inherits="GameFontNormal">
+				<Color r="1" g="1" b="1" a="1"/>
+				<Anchors>
+					<Anchor point="CENTER">
+						<Offset x="0" y="-12"/>
+					</Anchor>
+				</Anchors>				
+			</Fontstring>	
+		</Layer>		
+	</Layers>
+	<Scripts>
+		<OnMouseWheel>
+			ers_symbolTextSelect(arg1)
+		</OnMouseWheel>		
+		<OnMouseDown>
+			ers_MouseDown();
+		</OnMouseDown>
+		<OnMouseUp>
+			ers_OnDragStop();
+		</OnMouseUp>
+		<OnHide>
+			ers_OnDragStop();
+		</OnHide>	
+	</Scripts>
+</Frame>
+<Frame name="ERSsymbol9" hidden="false" enableMouse="true" frameStrata = "MEDIUM" movable="true" parent="ExoRaidSetupMain">
+	<Anchors>
+		<Anchor point = "CENTER">
+			<Offset>
+				<AbsDimension x="170" y="-60"/>
+			</Offset>			
+		</Anchor>
+	</Anchors>
+	<Size>
+		<AbsDimension x="15" y="15"/>
+	</Size>
+	<Layers>
+		<Layer level="ARTWORK">
+			<Texture file="Interface\Addons\ExoRaidSetup\ERSart\ERS9"/>
+		</Layer>
+		<Layer level="OVERLAY">
+			<Fontstring name="$parentText" inherits="GameFontNormal">
+				<Color r="1" g="1" b="1" a="1"/>
+				<Anchors>
+					<Anchor point="CENTER">
+						<Offset x="0" y="-12"/>
+					</Anchor>
+				</Anchors>				
+			</Fontstring>	
+		</Layer>		
+	</Layers>
+	<Scripts>
+		<OnMouseWheel>
+			ers_symbolTextSelect(arg1)
+		</OnMouseWheel>		
+		<OnMouseDown>
+			ers_MouseDown();
+		</OnMouseDown>
+		<OnMouseUp>
+			ers_OnDragStop();
+		</OnMouseUp>
+		<OnHide>
+			ers_OnDragStop();
+		</OnHide>	
+	</Scripts>
+</Frame>
+<Frame name="ERSsymbol10" hidden="false" enableMouse="true" frameStrata = "MEDIUM" movable="true" parent="ExoRaidSetupMain">
+	<Anchors>
+		<Anchor point = "CENTER">
+			<Offset>
+				<AbsDimension x="170" y="-120"/>
+			</Offset>			
+		</Anchor>
+	</Anchors>
+	<Size>
+		<AbsDimension x="15" y="15"/>
+	</Size>
+	<Layers>
+		<Layer level="ARTWORK">
+			<Texture file="Interface\Addons\ExoRaidSetup\ERSart\ERS10"/>
+		</Layer>
+		<Layer level="OVERLAY">
+			<Fontstring name="$parentText" inherits="GameFontNormal">
+				<Color r="1" g="1" b="1" a="1"/>
+				<Anchors>
+					<Anchor point="CENTER">
+						<Offset x="0" y="-12"/>
+					</Anchor>
+				</Anchors>				
+			</Fontstring>	
+		</Layer>		
+	</Layers>
+	<Scripts>
+		<OnMouseWheel>
+			ers_symbolTextSelect(arg1)
+		</OnMouseWheel>		
+		<OnMouseDown>
+			ers_MouseDown();
+		</OnMouseDown>
+		<OnMouseUp>
+			ers_OnDragStop();
+		</OnMouseUp>
+		<OnHide>
+			ers_OnDragStop();
+		</OnHide>	
+	</Scripts>
+</Frame>
+<Frame name="ERSarrowTemplate" virtual="true">
+	<Size>
+		<AbsDimension x="20" y="20"/>
+	</Size>
+	<Layers>
+		<Layer level="ARTWORK">
+			<Texture name = "$parentTexture"/>
+		</Layer>
+	</Layers>
+	<Scripts>
+		<OnMouseDown>
+			if IsAltKeyDown() then
+				ers_arrowRecycle()
+			else
+				ers_MouseDown()
+			end
+		</OnMouseDown>
+		<OnMouseUp>
+			ers_OnDragStop();
+		</OnMouseUp>
+		<OnHide>
+			ers_OnDragStop();
+		</OnHide>
+	</Scripts>	
+</Frame>
+<EditBox name="ERSInputBox"  inherits="InputBoxTemplate" hidden = "true">
+	<Size>
+		<AbsDimension x="80" y="16"/>
+	</Size>
+	<Anchors>
+		<Anchor point="CENTER"/>
+	</Anchors>
+	<Scripts>
+		<OnChar>
+			ers_autoComplete()
+		</OnChar>
+		<OnEnterPressed>
+			ers_GetInput()
+		</OnEnterPressed>
+		<OnEscapePressed>
+			ers_hideEdit()
+		</OnEscapePressed>
+	</Scripts>
+</EditBox>
+</Ui>

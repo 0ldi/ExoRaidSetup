@@ -1,0 +1,6 @@
+## Interface: 11200
+## Title: ExoRaidSetup v1.34
+## Notes: Visual Raid Setup Tool
+## Author: BioQuark of Eredar
+## SavedVariables: ExoRaidSetupz,ERSmmMask,ERSscale
+ExoRaidSetup.xml

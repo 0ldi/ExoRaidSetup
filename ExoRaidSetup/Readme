@@ -1,0 +1,47 @@
+Exo Raid Setup 1.34
+--------------------------------
+This mod was written for my old guild Exodius on Eredar. Due to the recent exodus
+of the key members of Exodius that I considered the heart of our guild pver the last few months,
+I  am releasing this mod publicly; I will keep "Exo" in the name as a tribute to a once great 
+guild.
+
+
+The mod basically allows a raid to share graphical representations of boss pulls and
+encounters using the 8 raid symbols in the Blizz raid UI, 2 additional symbols, and up
+up to 10 arrows for representing movement.
+
+There are three "modes" for the mod:
+Single player: for players not in a raid to create, load, and edit setups and animations.
+Raid Leader: gives Raid officers/leaders full control over creation, sending, and editing setups
+                     and animations.
+Raid Member: a "locked" version of the mod intended for the raid members to recieve, load, and 
+		      save setups and animations. There is also a "replay" feature of raid members to
+		      review recieved animation sequences.
+		      
+The setups can be "still shots"; or a series of frames which are viewed as a low FPS animation.
+
+The mod also has a Minimap mode that was still in development at the time of my leaving 
+Exo, but which is still fully functional "as-is"; basically this sets the background image to the
+current minimap graphic for "on the fly" setups.
+
+Currently there are maps in the mod for all of AQ40 and Naxx, as these were the instances
+we were working on. The addition of boss rooms for other instances is possible; and I welcome
+anyone willing to do the work on the art for them because I am not.
+
+Controls are fairly self-explanatory; every button and feature has detailed tooltips to guide
+you in its use.
+
+The main command to bring up the mod is "/ers"; this will also bring up a help screen background
+which details the various methods of moving and naming symbols etc. 
+
+-----------------------------------
+/ers nag is an undocumented command which AFTER an /ers check will send tells to all members of the raid
+	      with an outdated or missing version of ERS to upgrade to the current version.
+-----------------------------------	      
+
+I hope you find this mod useful it was both a joy and a pain to create :)
+
+--BioQuark
+
+Anyone with the ambition to convert ERS to ACE2 I would be glad  to work with you on this, but at the 
+moment I have neither the time or the energy to tackle such a momentous undertaking.
